@@ -1,0 +1,6 @@
+find_package(GTest REQUIRED)
+add_executable(test_detector test_detector.cpp ../src/preprocess.cpp ../src/postprocess.cpp)
+target_include_directories(test_detector PRIVATE ../src)
+target_link_libraries(test_detector PRIVATE GTest::gtest_main onnxruntime::onnxruntime ${OpenCV_LIBS})
+include(GoogleTest)
+gtest_discover_tests(test_detector)

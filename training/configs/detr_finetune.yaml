@@ -1,0 +1,20 @@
+model:
+  name: facebook/detr-resnet-50
+  num_labels: 80
+training:
+  epochs: 50
+  batch_size: 8
+  lr: 1.0e-5
+  lr_backbone: 1.0e-6
+  weight_decay: 1.0e-4
+  warmup_steps: 500
+  gradient_clip: 0.1
+data:
+  train_dir: data/train
+  val_dir: data/val
+  annotation_file_train: data/annotations/train.json
+  annotation_file_val: data/annotations/val.json
+  image_size: 800
+output:
+  checkpoint_dir: checkpoints/
+  export_path: ../inference/models/model.onnx
