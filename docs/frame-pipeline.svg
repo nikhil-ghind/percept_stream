@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 320" width="940" height="320" font-family="Helvetica, Arial, sans-serif">
+  <title>PerceptStream per-frame inference pipeline</title>
+  <text x="470" y="28" text-anchor="middle" fill="#8b949e" font-size="16" font-weight="bold">PerceptStream: every frame walks the same five stages inside one while loop</text>
+  <text x="470" y="50" text-anchor="middle" fill="#8b949e" font-size="12">frames are pipelined here only for illustration; the C++ loop runs the stages back to back per frame</text>
+  <rect x="55" y="110" width="150" height="62" rx="6" fill="#8b949e" fill-opacity="0.12" stroke="#8b949e" stroke-width="2"/>
+  <text x="130" y="136" text-anchor="middle" fill="#8b949e" font-size="13" font-weight="bold">cap.read</text>
+  <text x="130" y="154" text-anchor="middle" fill="#8b949e" font-size="10">OpenCV VideoCapture</text>
+  <rect x="215" y="110" width="150" height="62" rx="6" fill="#58a6ff" fill-opacity="0.12" stroke="#58a6ff" stroke-width="2"/>
+  <text x="290" y="136" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="bold">preprocess_frame</text>
+  <text x="290" y="154" text-anchor="middle" fill="#8b949e" font-size="10">resize to 800,</text>
+  <text x="290" y="167" text-anchor="middle" fill="#8b949e" font-size="10">normalize, CHW</text>
+  <rect x="385" y="110" width="150" height="62" rx="6" fill="#a371f7" fill-opacity="0.12" stroke="#a371f7" stroke-width="2"/>
+  <text x="460" y="136" text-anchor="middle" fill="#a371f7" font-size="13" font-weight="bold">Detector.run</text>
+  <text x="460" y="154" text-anchor="middle" fill="#8b949e" font-size="10">ONNX Runtime session,</text>
+  <text x="460" y="167" text-anchor="middle" fill="#8b949e" font-size="10">INT8</text>
+  <rect x="555" y="110" width="150" height="62" rx="6" fill="#3fb950" fill-opacity="0.12" stroke="#3fb950" stroke-width="2"/>
+  <text x="630" y="136" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="bold">postprocess</text>
+  <text x="630" y="154" text-anchor="middle" fill="#8b949e" font-size="10">softmax, cxcywh to xyxy,</text>
+  <text x="630" y="167" text-anchor="middle" fill="#8b949e" font-size="10">threshold</text>
+  <rect x="715" y="110" width="150" height="62" rx="6" fill="#d29922" fill-opacity="0.12" stroke="#d29922" stroke-width="2"/>
+  <text x="790" y="136" text-anchor="middle" fill="#d29922" font-size="13" font-weight="bold">draw + imshow</text>
+  <text x="790" y="154" text-anchor="middle" fill="#8b949e" font-size="10">boxes, labels, FPS</text>
+  <text x="790" y="167" text-anchor="middle" fill="#8b949e" font-size="10">overlay</text>
+  <path d="M205 141 L207 141" stroke="#8b949e" stroke-width="2" fill="none"/>
+  <path d="M205 136 L213 141 L205 146 Z" fill="#8b949e"/>
+  <path d="M365 141 L377 141" stroke="#8b949e" stroke-width="2" fill="none"/>
+  <path d="M375 136 L383 141 L375 146 Z" fill="#8b949e"/>
+  <path d="M535 141 L547 141" stroke="#8b949e" stroke-width="2" fill="none"/>
+  <path d="M545 136 L553 141 L545 146 Z" fill="#8b949e"/>
+  <path d="M705 141 L707 141" stroke="#8b949e" stroke-width="2" fill="none"/>
+  <path d="M705 136 L713 141 L705 146 Z" fill="#8b949e"/>
+  <g opacity="0.9">
+    <rect x="-13" y="194" width="26" height="20" rx="3" fill="#f0883e" fill-opacity="0.35" stroke="#f0883e" stroke-width="2">
+      <animate attributeName="x" dur="8.0s" begin="0.0s" repeatCount="indefinite" values="130;130;290;290;460;460;630;630;790;790;790" keyTimes="0;0.10;0.20;0.30;0.40;0.50;0.60;0.70;0.80;0.90;1" additive="sum"/>
+    </rect>
+    <text x="0" y="208" text-anchor="middle" fill="#f0883e" font-size="10" font-weight="bold">f1
+      <animate attributeName="x" dur="8.0s" begin="0.0s" repeatCount="indefinite" values="130;130;290;290;460;460;630;630;790;790;790" keyTimes="0;0.10;0.20;0.30;0.40;0.50;0.60;0.70;0.80;0.90;1"/>
+    </text>
+  </g>
+  <g opacity="0.9">
+    <rect x="-13" y="194" width="26" height="20" rx="3" fill="#f0883e" fill-opacity="0.35" stroke="#f0883e" stroke-width="2">
+      <animate attributeName="x" dur="8.0s" begin="2.4s" repeatCount="indefinite" values="130;130;290;290;460;460;630;630;790;790;790" keyTimes="0;0.10;0.20;0.30;0.40;0.50;0.60;0.70;0.80;0.90;1" additive="sum"/>
+    </rect>
+    <text x="0" y="208" text-anchor="middle" fill="#f0883e" font-size="10" font-weight="bold">f2
+      <animate attributeName="x" dur="8.0s" begin="2.4s" repeatCount="indefinite" values="130;130;290;290;460;460;630;630;790;790;790" keyTimes="0;0.10;0.20;0.30;0.40;0.50;0.60;0.70;0.80;0.90;1"/>
+    </text>
+  </g>
+  <g opacity="0.9">
+    <rect x="-13" y="194" width="26" height="20" rx="3" fill="#f0883e" fill-opacity="0.35" stroke="#f0883e" stroke-width="2">
+      <animate attributeName="x" dur="8.0s" begin="4.8s" repeatCount="indefinite" values="130;130;290;290;460;460;630;630;790;790;790" keyTimes="0;0.10;0.20;0.30;0.40;0.50;0.60;0.70;0.80;0.90;1" additive="sum"/>
+    </rect>
+    <text x="0" y="208" text-anchor="middle" fill="#f0883e" font-size="10" font-weight="bold">f3
+      <animate attributeName="x" dur="8.0s" begin="4.8s" repeatCount="indefinite" values="130;130;290;290;460;460;630;630;790;790;790" keyTimes="0;0.10;0.20;0.30;0.40;0.50;0.60;0.70;0.80;0.90;1"/>
+    </text>
+  </g>
+  <text x="210" y="98" text-anchor="middle" fill="#8b949e" font-size="10">cv::Mat BGR</text>
+  <text x="375" y="98" text-anchor="middle" fill="#8b949e" font-size="10">1x3x800x800 float</text>
+  <text x="545" y="98" text-anchor="middle" fill="#8b949e" font-size="10">logits 100xC + boxes 100x4</text>
+  <text x="710" y="98" text-anchor="middle" fill="#8b949e" font-size="10">vector&lt;Detection&gt;</text>
+  <text x="470" y="242" text-anchor="middle" fill="#8b949e" font-size="12">chrono clock brackets the whole body; 1000 / elapsed_ms is drawn back onto the frame as FPS</text>
+  <text x="470" y="266" text-anchor="middle" fill="#8b949e" font-size="12">loop exits when cap.read fails or waitKey returns q</text>
+  <text x="470" y="298" text-anchor="middle" fill="#8b949e" font-size="12">offline: train.py fine-tunes DETR, export.py writes model.onnx, quantize.py emits model_int8.onnx loaded above</text>
+</svg>

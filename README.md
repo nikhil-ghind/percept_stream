@@ -33,14 +33,43 @@ make -j$(nproc)
 
 ## Architecture
 
+```mermaid
+flowchart TB
+    subgraph train["Offline: training/ and scripts/ (Python)"]
+        ds["dataset.py<br/>COCO-style loader"]
+        cfg["configs/detr_finetune.yaml"]
+        tr["train.py<br/>build_model, AdamW, AMP scaler,<br/>train_one_epoch with grad clipping"]
+        ck["checkpoints/best.pt"]
+        ex["export.py<br/>torch.onnx.export opset 16, then validate_onnx"]
+        onnx["models/model.onnx (FP32)"]
+        qz["scripts/quantize.py<br/>quantize_static with a calibration reader"]
+        int8["models/model_int8.onnx (INT8)"]
+        ev["evaluate.py<br/>pycocotools mAP"]
+        bench["scripts/benchmark.py<br/>p50 / p95 / p99 latency"]
+    end
+
+    subgraph infer["Online: inference/ (C++17, ONNX Runtime + OpenCV)"]
+        cap["cv::VideoCapture<br/>--source 0 or a file path"]
+        pre["preprocess_frame<br/>resize to 800, normalize, CHW tensor"]
+        det["Detector<br/>Ort::Session, 4 intra-op threads"]
+        post["postprocess<br/>softmax over 100 queries, cxcywh to xyxy,<br/>scaled back to frame size, --threshold"]
+        draw["draw_detections + FPS overlay<br/>cv::imshow, quit on q"]
+    end
+
+    ds --> tr
+    cfg --> tr
+    tr --> ck --> ex --> onnx --> qz --> int8
+    onnx --> ev
+    int8 --> ev
+    int8 --> bench
+    int8 -->|"--model"| det
+    cap --> pre --> det --> post --> draw
+    draw -->|"next frame"| cap
 ```
-[HuggingFace DETR] → fine-tune → checkpoints/best.pt
-    → torch.onnx.export → model.onnx (FP32)
-    → quantize_static  → model_int8.onnx (INT8)
-    → C++ ONNX Runtime inference
-        OpenCV capture → preprocess (resize+normalize) → OrtSession.Run
-        → softmax decode → box coords → draw_detections → imshow @ 30+ FPS
-```
+
+### Per-frame path
+
+<img src="docs/frame-pipeline.svg" alt="Frames moving through capture, preprocess, ONNX Runtime inference, postprocess and draw" width="940">
 
 ## Evaluation
 
